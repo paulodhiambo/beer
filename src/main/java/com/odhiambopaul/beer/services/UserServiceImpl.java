@@ -14,4 +14,19 @@ public class UserServiceImpl implements UserService {
                 .name("Paul Odhiambo")
                 .build();
     }
+
+    @Override
+    public UserDTO insertUser(UserDTO userDTO) {
+        return UserDTO.builder().build();
+    }
+
+    @Override
+    public void updateUser(UUID userId, UserDTO userDTO) {
+        //todo add a real impl of user update
+    }
+
+    @Override
+    public void deleteById(UUID userId) {
+        System.out.println("Deleting user.......");
+    }
 }

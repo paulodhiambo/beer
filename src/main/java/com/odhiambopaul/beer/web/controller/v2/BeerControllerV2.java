@@ -1,7 +1,7 @@
-package com.odhiambopaul.beer.web.controller;
+package com.odhiambopaul.beer.web.controller.v2;
 
-import com.odhiambopaul.beer.services.BeerService;
-import com.odhiambopaul.beer.web.model.BeerDTO;
+import com.odhiambopaul.beer.services.v2.BeerServiceV2;
+import com.odhiambopaul.beer.web.model.v2.BeerDTOV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v2/beer")
 @RestController
-public class BeerController {
-    private final BeerService beerService;
+public class BeerControllerV2 {
+    private final BeerServiceV2 beerService;
 
-    public BeerController(BeerService beerService) {
+    public BeerControllerV2(BeerServiceV2 beerService) {
         this.beerService = beerService;
     }
 
     @GetMapping({"/{beerId}"})
-    public ResponseEntity<BeerDTO> getBeer(@PathVariable UUID beerId) {
-        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+    public ResponseEntity<BeerDTOV2> getBeer(@PathVariable UUID beerId) {
+        return new ResponseEntity(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity insertBeer(@RequestBody BeerDTO beerDTO) {
-        BeerDTO beerDTO1 = beerService.insertBeer(beerDTO);
+    public ResponseEntity insertBeer(@RequestBody BeerDTOV2 beerDTO) {
+        BeerDTOV2 beerDTO1 = beerService.insertBeer(beerDTO);
         HttpHeaders headers = new HttpHeaders();
         //todo add hostname to url
         headers.add("Location", "/api/v1/beer/" + beerDTO1.getId().toString());
@@ -33,7 +33,7 @@ public class BeerController {
     }
 
     @PutMapping({"/{beerId}"})
-    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beerDTO) {
+    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTOV2 beerDTO) {
         beerService.updateBeer(beerId, beerDTO);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
